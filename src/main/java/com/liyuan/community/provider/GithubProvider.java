@@ -37,7 +37,6 @@ public class GithubProvider {
         try {
             Response response = okHttpClient.newCall(request).execute();
             String result = response.body().string();
-            System.out.println(result);
             GithubUser githubUser = JSON.parseObject(result, GithubUser.class);
             return githubUser;
         } catch (IOException e) {
