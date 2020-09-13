@@ -38,7 +38,9 @@ public class AuthController {
         accessTokenDto.setState(state);
         accessTokenDto.setClient_id(clientId);
         accessTokenDto.setClient_secret(clientSecret);
+        //获取访问令牌
         String accessToken = githubProvider.getAccessToken(accessTokenDto);
+        //根据令牌获取用户信息
         GithubUser githubUser = githubProvider.getUser(accessToken);
         if (githubUser != null) {
             User user = new User();
