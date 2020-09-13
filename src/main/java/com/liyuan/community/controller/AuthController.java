@@ -42,7 +42,7 @@ public class AuthController {
         String accessToken = githubProvider.getAccessToken(accessTokenDto);
         //根据令牌获取用户信息
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if (githubUser != null) {
+        if (githubUser != null && githubUser.getId() != null) {
             User user = new User();
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setName(githubUser.getName());
