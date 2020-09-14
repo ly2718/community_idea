@@ -50,6 +50,7 @@ public class AuthController {
             user.setToken(token);
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatar_url());
             userMapper.insert(user);
             httpServletResponse.addCookie(new Cookie("token",token));
             return "redirect:/";

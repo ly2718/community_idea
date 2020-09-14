@@ -1,9 +1,10 @@
-package com.liyuan.community.model;
+package com.liyuan.community.dto;
 
+import com.liyuan.community.model.User;
 import lombok.Data;
 
 @Data
-public class Question {
+public class QuestionDto {
     private int id;
     private String title;
     private String description;
@@ -14,10 +15,11 @@ public class Question {
     private int likeCount;
     private long gmtCreate;
     private long gmtModify;
+    private User user;
 
     @Override
     public String toString() {
-        return "Question{" +
+        return "QuestionDto{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -28,6 +30,7 @@ public class Question {
                 ", likeCount=" + likeCount +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModify=" + gmtModify +
+                ", user=" + user +
                 '}';
     }
 }
