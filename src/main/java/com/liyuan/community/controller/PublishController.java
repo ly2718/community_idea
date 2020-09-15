@@ -33,8 +33,11 @@ public class PublishController {
                             @Param(value = "tag") String tag,
                             HttpServletRequest httpServletRequest,
                             Model model) {
+        //数据回显
         model.addAttribute("title", title);
+        //数据回显
         model.addAttribute("description", description);
+        //数据回显
         model.addAttribute("tag", tag);
         if (title == null || "".equals(title)) {
             model.addAttribute("error", "标题" + REQUIRED_NOT_NULL);
