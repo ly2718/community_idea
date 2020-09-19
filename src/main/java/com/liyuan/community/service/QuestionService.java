@@ -46,4 +46,31 @@ public class QuestionService {
         paginationDto.setQuestions(questionDtoList);
         return paginationDto;
     }
+
+    public PaginationDto list(int id, int page, int size) {
+        PaginationDto paginationDto = new PaginationDto();
+        //获取问题总数
+        int totalCount = questionMapper.countByUserId(id);
+        //设置页面所需参数
+        paginationDto.setPagination(totalCount, page, size);
+        //获取数据库查询偏移量
+        int offset = size * (paginationDto.getPage() - 1);
+        //获取数据库查询结果
+        List<Question> questions = questionMapper.listByUserId(id, offset, size);
+        //根据问题发起人ID获取用户信息
+        User user = userMapper.findById(id);
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        if (questions != null) {
+            for (Question question : questions) {
+                QuestionDto questionDto = new QuestionDto();
+                //复制字段参数
+                BeanUtils.copyProperties(question, questionDto);
+                //添加问题发起人信息
+                questionDto.setUser(user);
+                questionDtoList.add(questionDto);
+            }
+        }
+        paginationDto.setQuestions(questionDtoList);
+        return paginationDto;
+    }
 }

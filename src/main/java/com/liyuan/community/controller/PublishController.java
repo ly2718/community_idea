@@ -20,7 +20,7 @@ public class PublishController {
     private QuestionMapper questionMapper;
     @Autowired
     private UserMapper userMapper;
-    private static final String REQUIRED_NOT_NULL = "不能为空";
+    private static final String REQUIRED_NOT_EMPTY = "不能为空";
 
     @GetMapping("/publish")
     public String publish() {
@@ -40,15 +40,15 @@ public class PublishController {
         //数据回显
         model.addAttribute("tag", tag);
         if (title == null || "".equals(title)) {
-            model.addAttribute("error", "标题" + REQUIRED_NOT_NULL);
+            model.addAttribute("error", "标题" + REQUIRED_NOT_EMPTY);
             return "publish";
         }
         if (description == null || "".equals(description)) {
-            model.addAttribute("error", "问题补充" + REQUIRED_NOT_NULL);
+            model.addAttribute("error", "问题补充" + REQUIRED_NOT_EMPTY);
             return "publish";
         }
         if (tag == null || "".equals(tag)) {
-            model.addAttribute("error", "标签" + REQUIRED_NOT_NULL);
+            model.addAttribute("error", "标签" + REQUIRED_NOT_EMPTY);
             return "publish";
         }
         User user = null;

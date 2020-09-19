@@ -53,9 +53,7 @@ public class AuthController {
             user.setAvatarUrl(githubUser.getAvatar_url());
             userMapper.insert(user);
             httpServletResponse.addCookie(new Cookie("token",token));
-            return "redirect:/";
-        } else {
-            return "redirect:/";
         }
+        return "redirect:/";
     }
 }

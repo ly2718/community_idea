@@ -1,10 +1,7 @@
 package com.liyuan.community.controller;
 
 import com.liyuan.community.dto.PaginationDto;
-import com.liyuan.community.dto.QuestionDto;
-import com.liyuan.community.mapper.QuestionMapper;
 import com.liyuan.community.mapper.UserMapper;
-import com.liyuan.community.model.Question;
 import com.liyuan.community.model.User;
 import com.liyuan.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class IndexController {
