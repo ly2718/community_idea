@@ -73,4 +73,14 @@ public class QuestionService {
         paginationDto.setQuestions(questionDtoList);
         return paginationDto;
     }
+
+    public QuestionDto getById(int id) {
+        Question question = questionMapper.getById(id);
+        QuestionDto questionDto = new QuestionDto();
+        //复制字段参数
+        BeanUtils.copyProperties(question, questionDto);
+        User user = userMapper.findById(id);
+        questionDto.setUser(user);
+        return questionDto;
+    }
 }

@@ -22,12 +22,11 @@ public class ProfileController {
     private QuestionService questionService;
 
     @GetMapping("/profile/{action}")
-    public String profile(HttpServletRequest req,
+    public String profile(HttpServletRequest request,
                           Model model,
                           @PathVariable(name = "action") String action,
                           @RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "size", defaultValue = "5") int size) {
-        User user = new User();
         if ("questions".equals(action)) {
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的问题");
@@ -35,11 +34,12 @@ public class ProfileController {
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "我的回复");
         }
-        if(user == null){
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
             return "redirect:/";
         }
         PaginationDto paginationDto = questionService.list(user.getId(), page, size);
-        model.addAttribute("pagination",paginationDto);
+        model.addAttribute("pagination", paginationDto);
         return "profile";
     }
 

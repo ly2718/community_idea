@@ -23,7 +23,9 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h4 class="media-heading" th:text="${question.title}">
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                    </h4>
                     <span th:text="${question.description}"></span><br>
                     <span class="text-desc"><span th:text="${question.commentCount}"></span>个回复·<span
                             th:text="${question.viewCount}"></span>次浏览·<span
@@ -34,12 +36,12 @@
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
                         <a th:href="@{/(page=1)}" aria-label="Previous">
-                            <span aria-hidden="true">&lt;&lt;<</span>
+                            <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}">
                         <a th:href="@{/(page=${pagination.page}-1)}" aria-label="Previous">
-                            <span aria-hidden="true">&lt;<</span>
+                            <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page:${pagination.pages}"

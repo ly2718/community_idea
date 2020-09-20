@@ -16,30 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class IndexController {
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private QuestionService questionService;
 
     @GetMapping("/")
     public String index(HttpServletRequest httpServletRequest,
                         Model model,
-                        @RequestParam(name = "page",defaultValue = "1")int page,
-                        @RequestParam(name = "size",defaultValue = "5")int size) {
-        Cookie[] cookies = httpServletRequest.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
-                    if (user != null) {
-                        httpServletRequest.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
-        PaginationDto paginationDto = questionService.list(page,size);
-        model.addAttribute("pagination",paginationDto);
+                        @RequestParam(name = "page", defaultValue = "1") int page,
+                        @RequestParam(name = "size", defaultValue = "5") int size) {
+        PaginationDto paginationDto = questionService.list(page, size);
+        model.addAttribute("pagination", paginationDto);
         return "index";
     }
 

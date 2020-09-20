@@ -31,7 +31,7 @@ public class PublishController {
     public String doPublish(@Param(value = "title") String title,
                             @Param(value = "description") String description,
                             @Param(value = "tag") String tag,
-                            HttpServletRequest httpServletRequest,
+                            HttpServletRequest request,
                             Model model) {
         //数据回显
         model.addAttribute("title", title);
@@ -51,20 +51,7 @@ public class PublishController {
             model.addAttribute("error", "标签" + REQUIRED_NOT_EMPTY);
             return "publish";
         }
-        User user = null;
-        Cookie[] cookies = httpServletRequest.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    String token = cookie.getValue();
-                    user = userMapper.findByToken(token);
-                    if (user != null) {
-                        httpServletRequest.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "用户未登录");
             return "publish";
