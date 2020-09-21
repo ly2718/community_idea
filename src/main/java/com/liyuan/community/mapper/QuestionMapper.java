@@ -1,10 +1,7 @@
 package com.liyuan.community.mapper;
 
 import com.liyuan.community.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,5 +25,8 @@ public interface QuestionMapper {
     int countByUserId(@Param(value = "userId") int userId);
 
     @Select(value = "select * from question where id = #{id}")
-    Question getById(@Param(value = "id")int id);
+    Question getById(@Param(value = "id") int id);
+
+    @Update("update question set title = #{title}, description = #{description}, tag = #{tag}, gmt_modify = #{gmtModify} where id = #{id}")
+    void update(Question question);
 }

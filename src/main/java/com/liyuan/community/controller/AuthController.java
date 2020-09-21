@@ -5,6 +5,7 @@ import com.liyuan.community.dto.GithubUser;
 import com.liyuan.community.mapper.UserMapper;
 import com.liyuan.community.model.User;
 import com.liyuan.community.provider.GithubProvider;
+import com.liyuan.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class AuthController {
     @Autowired
     private GithubProvider githubProvider;
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
     @Value("${github.client.id}")
     private String clientId;
     @Value("${github.client.secret}")
@@ -48,12 +49,21 @@ public class AuthController {
             user.setName(githubUser.getName());
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModify(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatar_url());
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
             httpServletResponse.addCookie(new Cookie("token",token));
         }
         return "redirect:/";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
+    
 }

@@ -1,26 +1,39 @@
 package com.liyuan.community.controller;
 
-import com.liyuan.community.mapper.QuestionMapper;
-import com.liyuan.community.mapper.UserMapper;
+import com.liyuan.community.dto.QuestionDto;
 import com.liyuan.community.model.Question;
 import com.liyuan.community.model.User;
-import org.apache.ibatis.annotations.Param;
+import com.liyuan.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PublishController {
     @Autowired
-    private QuestionMapper questionMapper;
-    @Autowired
-    private UserMapper userMapper;
+    private QuestionService questionService;
+
     private static final String REQUIRED_NOT_EMPTY = "不能为空";
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id") int id,Model model) {
+        QuestionDto question = questionService.getById(id);
+        //数据回显
+        model.addAttribute("title", question.getTitle());
+        //数据回显
+        model.addAttribute("description", question.getDescription());
+        //数据回显
+        model.addAttribute("tag", question.getTag());
+        model.addAttribute("id",question.getId());
+        return "publish";
+    }
+
 
     @GetMapping("/publish")
     public String publish() {
@@ -28,9 +41,10 @@ public class PublishController {
     }
 
     @PostMapping("/publish")
-    public String doPublish(@Param(value = "title") String title,
-                            @Param(value = "description") String description,
-                            @Param(value = "tag") String tag,
+    public String doPublish(@RequestParam(value = "title",required = false) String title,
+                            @RequestParam(value = "description",required = false) String description,
+                            @RequestParam(value = "tag",required = false) String tag,
+                            @RequestParam(value = "id",required = false)int id,
                             HttpServletRequest request,
                             Model model) {
         //数据回显
@@ -63,7 +77,8 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModify(question.getGmtCreate());
-        questionMapper.create(question);
+        question.setId(id);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 
