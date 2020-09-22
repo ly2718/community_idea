@@ -2,6 +2,8 @@ package com.liyuan.community.service;
 
 import com.liyuan.community.dto.PaginationDto;
 import com.liyuan.community.dto.QuestionDto;
+import com.liyuan.community.exception.CustomizeErrorCode;
+import com.liyuan.community.exception.CustomizeException;
 import com.liyuan.community.mapper.QuestionMapper;
 import com.liyuan.community.mapper.UserMapper;
 import com.liyuan.community.model.Question;
@@ -76,6 +78,9 @@ public class QuestionService {
 
     public QuestionDto getById(int id) {
         Question question = questionMapper.getById(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDto questionDto = new QuestionDto();
         //复制字段参数
         BeanUtils.copyProperties(question, questionDto);
