@@ -99,4 +99,8 @@ public class QuestionService {
             questionMapper.update(question);
         }
     }
+
+    public void incView(int id) {
+        questionMapper.updateById(id);
+    }
 }

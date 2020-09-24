@@ -44,7 +44,6 @@ public class PublishController {
     public String doPublish(@RequestParam(value = "title",required = false) String title,
                             @RequestParam(value = "description",required = false) String description,
                             @RequestParam(value = "tag",required = false) String tag,
-                            @RequestParam(value = "id",required = false)int id,
                             HttpServletRequest request,
                             Model model) {
         //数据回显
@@ -77,7 +76,6 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModify(question.getGmtCreate());
-        question.setId(id);
         questionService.createOrUpdate(question);
         return "redirect:/";
     }
