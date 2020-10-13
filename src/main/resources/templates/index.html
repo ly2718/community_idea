@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="/static/css/community.css"/>
     <script type="text/javascript" src="/static/js/jquery-3.4.0.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="application/javascript">
+        window.onload = function (){
+            let closable = window.localStorage.getItem("closable");
+            if(closable == "true"){
+              window.close();
+              window.localStorage.removeItem("closable");
+            }
+        }
+    </script>
 </head>
 <body>
 <div th:insert="~{navigation::nav}"></div>

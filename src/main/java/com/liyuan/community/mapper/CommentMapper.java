@@ -14,5 +14,5 @@ public interface CommentMapper {
     void insert(Comment comment);
 
     @Select("select * from comment where parent_id = #{parentId}")
-    Comment getById(@Param(value = "parentId") long parentId);
+    Comment getByParentId(@Param(value = "parentId") long parentId);
 }

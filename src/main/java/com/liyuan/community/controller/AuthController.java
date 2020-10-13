@@ -2,7 +2,6 @@ package com.liyuan.community.controller;
 
 import com.liyuan.community.dto.AccessTokenDto;
 import com.liyuan.community.dto.GithubUser;
-import com.liyuan.community.mapper.UserMapper;
 import com.liyuan.community.model.User;
 import com.liyuan.community.provider.GithubProvider;
 import com.liyuan.community.service.UserService;

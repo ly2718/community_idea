@@ -9,7 +9,9 @@ import com.liyuan.community.model.Comment;
 import com.liyuan.community.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class CommentService {
     @Autowired
@@ -24,7 +26,7 @@ public class CommentService {
             throw new CustomizeException(CustomizeErrorCode.TYPE_ERROR);
         }
         if(comment.getType() == CommentTypeEnum.COMMENT.getType()){
-            Comment dbComment = commentMapper.getById(comment.getParentId());
+            Comment dbComment = commentMapper.getByParentId(comment.getParentId());
             if(dbComment == null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
