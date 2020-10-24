@@ -4,6 +4,9 @@ import com.liyuan.community.model.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 @Mapper
 public interface UserMapper {
@@ -21,4 +24,13 @@ public interface UserMapper {
 
     @Update("update user set name = #{name}, token = #{token}, gmt_modify = #{gmtModify}, avatar_url = #{avatarUrl} where id = #{id}")
     void update(User dbUser);
+
+    @Select("<script> " +
+            "select * from user where id in" +
+            "<foreach item='item' index='index' collection='userIds' open='(' separator=',' close=')'> " +
+            "   #{item} " +
+            "</foreach>" +
+            "</script> "
+    )
+    List<User> selectByIds(@Param(value = "userIds") List<Long> userIds);
 }

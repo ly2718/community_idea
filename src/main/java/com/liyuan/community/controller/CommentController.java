@@ -1,6 +1,6 @@
 package com.liyuan.community.controller;
 
-import com.liyuan.community.dto.CommentDto;
+import com.liyuan.community.dto.CommentCreateDto;
 import com.liyuan.community.dto.ResultDto;
 import com.liyuan.community.exception.CustomizeErrorCode;
 import com.liyuan.community.model.Comment;
@@ -22,16 +22,16 @@ public class CommentController {
 
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     @ResponseBody
-    public Object post(@RequestBody CommentDto commentDto, HttpServletRequest request) {
+    public Object post(@RequestBody CommentCreateDto commentCreateDto, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             return ResultDto.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
         Comment comment = new Comment();
-        comment.setParentId(commentDto.getParentId());
-        comment.setContent(commentDto.getContent());
-        comment.setType(commentDto.getType());
-        comment.setLikeCount(0l);
+        comment.setParentId(commentCreateDto.getParentId());
+        comment.setContent(commentCreateDto.getContent());
+        comment.setType(commentCreateDto.getType());
+        comment.setLikeCount(0L);
         comment.setCommentator(user.getId());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModify(comment.getGmtCreate());
